@@ -1,11 +1,11 @@
 from helpers import NotEnoughStockException
 from turbine import ManagedMap
 
-class Stock:
+class Inventory:
     item_count = ManagedMap()
     item_price = ManagedMap()
 
-    def subtract_stock(self, item_id: int, cnt: int) -> bool:
+    def subtract(self, item_id: int, cnt: int) -> bool:
         available_stock = self.item_count.get(item_id)
 
         if available_stock < cnt:
@@ -15,7 +15,7 @@ class Stock:
 
         return True
 
-    def available_stock(self, item_id: int) -> int:
+    def available(self, item_id: int) -> int:
         if self.item_count.get(item_id) > 0:
             return 1
 

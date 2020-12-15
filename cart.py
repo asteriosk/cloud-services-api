@@ -1,7 +1,7 @@
 import turbine
 from helpers import NotAvailableStockException
 from payment import Payment
-from stock import Stock
+from inventory import Inventory
 from turbine import ManagedMap
 # from turbine import ManagedList
 
@@ -10,7 +10,7 @@ class Cart:
     # Managed state holding the shopping cart contents
     cart: ManagedMap = ManagedMap()
 
-    stock_svc: Stock = turbine.service.discover(Stock.__class__)
+    stock_svc: Inventory = turbine.service.discover(Inventory.__class__)
     payment_svc: Payment = turbine.service.discover(Payment.__class__)
 
     # permits one item at a time.
@@ -46,10 +46,10 @@ class Cart:
 
         # checks if all items are available
         for item in self.cart.get(user_id):
-            if not self.stock_svc.available_stock(item):
+            if not self.stock_svc.available(item):
                 raise NotAvailableStockException("No items left for item_id: " + str(item))
 
-            self.stock_svc.subtract_stock(item, 1)
+            self.stock_svc.subtract(item, 1)
             total_price += self.stock_svc.price(item)
 
         # subtracts the items
