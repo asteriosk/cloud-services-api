@@ -1,0 +1,27 @@
+global:
+  fault-tolerance:
+    function-calls: exactly-once
+    checkpoint-interval: 5s
+    high-availability: 
+      enabled: true
+      num-shadows: 1
+  state-backend: iMap
+  affinity: 
+    service-group: 
+      name: InventoryPaymentsGroup
+      - hazelcast.Inventory
+      - hazelcast.Payment
+
+  
+service:
+  hazecast.Inventory:
+    max-parallelism: 10
+    min-parallelism: 3
+    data-partitioning: range-partitioning
+    max-memory: 1024
+    state-backend: RocksDB
+  hazelcast.Payment:
+    max-parallelism: 1
+    min-parallelism: 1
+    data-partitioning: hash
+    
