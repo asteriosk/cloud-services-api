@@ -1,5 +1,5 @@
 import turbine
-from helpers import NotAvailableStockException
+from exceptions import NotAvailableStockException
 from payment import Payment
 from inventory import Inventory
 from turbine import ManagedMap
@@ -14,7 +14,7 @@ class Cart:
     payment_svc: Payment = turbine.service.discover(Payment.__class__)
 
     # permits one item at a time.
-    @turbine.endpoint("/cart/add_item")
+    @turbine.endpoint(endpoint = "/cart/add_item", method={"user_id": "POST", "item_id": "GET"})
     def add_item(self, user_id: int, item_id: int) -> bool:
         user_items = self.cart.get(user_id)
 
@@ -26,7 +26,7 @@ class Cart:
 
         return True
 
-    @turbine.endpoint("/cart/remove_item")
+    @turbine.endpoint(endpoint = "/cart/remove_item", method={"user_id": "POST", "item_id": "GET"})
     def remove_item(self, user_id: int, item_id: int) -> bool:
         user_items = self.cart.get(user_id)
 
@@ -37,10 +37,10 @@ class Cart:
 
         return True
 
-    # The transactional decoration ensures that all function calls are atomic and successful (i.e., no exceptions return from calls
-    # by turbine convention)
+    # The transactional decoration ensures that all function calls are atomic and successful (i.e., no exceptions
+    # return from calls by turbine convention)
     @turbine.transactional
-    @turbine.endpoint("/cart/checkout")
+    @turbine.endpoint(endpoint = "/cart/checkout", method={"user_id": "POST"})
     def checkout(self, user_id: int) -> bool:
         total_price = 0
 

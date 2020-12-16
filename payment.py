@@ -1,4 +1,4 @@
-from helpers import NotEnoughFundsException
+from exceptions import NotEnoughFundsException
 from turbine import ManagedMap
 
 class Payment:

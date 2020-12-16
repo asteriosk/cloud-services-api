@@ -1,4 +1,4 @@
-from helpers import NotEnoughStockException
+from exceptions import NotEnoughStockException
 from turbine import ManagedMap
 
 class Inventory:

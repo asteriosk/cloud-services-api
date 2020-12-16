@@ -9,18 +9,18 @@ global:
   affinity: 
     service-group: 
       name: InventoryPaymentsGroup
-      - hazelcast.Inventory
-      - hazelcast.Payment
+      - namespaceName.Inventory
+      - namespaceName.Payment
 
   
 service:
-  hazecast.Inventory:
+  namespaceName.Inventory:
     max-parallelism: 10
     min-parallelism: 3
     data-partitioning: range-partitioning
     max-memory: 1024
     state-backend: RocksDB
-  hazelcast.Payment:
+  namespaceName.Payment:
     max-parallelism: 1
     min-parallelism: 1
     data-partitioning: hash
