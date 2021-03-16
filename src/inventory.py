@@ -1,5 +1,5 @@
 from exceptions import NotEnoughStockException
-from turbine import ManagedMap
+from service import ManagedMap
 
 class Inventory:
     item_count = ManagedMap()

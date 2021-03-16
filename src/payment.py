@@ -1,5 +1,5 @@
 from exceptions import NotEnoughFundsException
-from turbine import ManagedMap
+from service import ManagedMap
 
 class Payment:
     accounts = ManagedMap()

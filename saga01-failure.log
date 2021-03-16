@@ -1,0 +1,39 @@
+saga start sagaID1
+call stock_svc.available {"item_id" = 4} idcall1 | stock_svc.available_compensate {"item_id" = 4}
+success call idcall1
+call stock_svc.subtract {"item_id" = 4} idcall2 | stock_svc.subtract_compensate {"item_id" = 4}
+success call idcall2
+call stock_svc.price {"item_id" = 4} idcall3 | stock_svc.price_compensate {"item_id" = 4}
+success call idcall3
+#
+call stock_svc.available {"item_id" = 2} idcall4 | stock_svc.available_compensate {"item_id" = 2}
+success call idcall4
+call stock_svc.subtract {"item_id" = 2} idcall5 | stock_svc.subtract_compensate {"item_id" = 2}
+success call idcall5
+call stock_svc.price {"item_id" = 2} idcall6 | stock_svc.price_compensate {"item_id" = 2}
+success call idcall6
+
+call payment_svc.pay, {"user_id" = user_id, "total_price"=total_price} idcall7
+fail call idcall7
+
+
+# TODO: compensate calls 6,5,4,3,2,1]
+call stock_svc.price_compensate {"item_id" = 2} idcall8
+success call idcall8
+
+call stock_svc.subtract_compensate {"item_id" = 2} idcall9
+success call idcall9
+
+call stock_svc.available_compensate {"item_id" = 2} idcall10
+success call idcall10
+
+call stock_svc.price_compensate {"item_id" = 4} idcall11
+success call idcall11
+
+call stock_svc.subtract_compensate {"item_id" = 4} idcall12
+success call idcall12
+
+call stock_svc.available_compensate {"item_id" = 4} idcall13
+success call idcall13
+
+saga end sagaid1

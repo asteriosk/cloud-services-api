@@ -1,0 +1,19 @@
+saga start sagaID1
+call stock_svc.available {"item_id" = 4} idcall1
+success call idcall1
+call stock_svc.subtract {"item_id" = 4} idcall2
+success call idcall2
+call stock_svc.price {"item_id" = 4} idcall3
+success call idcall3
+#
+call stock_svc.available {"item_id" = 2} idcall4
+success call idcall4
+call stock_svc.subtract {"item_id" = 2} idcall5
+success call idcall5
+call stock_svc.price {"item_id" = 2} idcall6
+success call idcall6
+
+call payment_svc.pay, {"user_id" = user_id,"total_price"=total_price} idcall7
+success call idcall7
+
+saga end sagaid1

@@ -42,3 +42,40 @@ def endpoint(f):
 class service:
     def discover(self, service_name):
         pass
+
+
+class Log:
+    def __init__(self):
+        pass
+
+    def append(self, saga_id: int, log_entry: str):
+        # appends the line to the log of this saga
+        pass
+
+    def flush(self):
+        pass
+
+    def get(self, saga_id: int): 
+        #returns the complete log of that saga
+        pass
+
+class Orchestrator:
+    saga_id: int
+    log: Log = Log()
+
+    def start_saga(self):
+        self.log.append("saga_start", self.saga_id)
+        pass
+
+    def call(self, endpoint, args, compensate_endpoint, compensate_args):
+        self.log.append(self.saga_id, "blah blah")
+        return True
+
+    def end_saga(self):
+        self.log.append(self.saga_id, "end_start")
+        pass
+
+
+
+
+
